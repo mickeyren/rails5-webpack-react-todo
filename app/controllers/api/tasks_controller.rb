@@ -1,5 +1,7 @@
 module Api
   class TasksController < ApplicationController
+    before_action :load_task, only: :update
+
     def index
       collection = Task.all
       render json: collection,
@@ -17,12 +19,24 @@ module Api
       end
     end
 
+    def update
+      if @task.update_attributes(task_params)
+        head :ok
+      else
+        head :unprocessable_entity
+      end
+    end
+
     private
 
     def task_params
       return {} unless params[:task]
 
-      params.require(:task).permit([:title, :notes, :completed_at])\
+      params.require(:task).permit([:title, :notes, :completed_at])
+    end
+
+    def load_task
+      @task = Task.find(params[:id])
     end
   end
 end
