@@ -13,13 +13,14 @@ RSpec.describe "Tasks Controller", type: :request do
 
       it { expect(response.code).to eq '200' }
 
-      it { expect(response_body).to include(
+      it {
+          expect(response_body).to include(
             id: task.id,
             title: task.title,
             notes: task.notes,
             completed_at: nil
           )
-         }
+      }
     end
 
     context 'creating tasks' do

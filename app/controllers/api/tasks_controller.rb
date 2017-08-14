@@ -32,7 +32,7 @@ module Api
     def task_params
       return {} unless params[:task]
 
-      params.require(:task).permit([:title, :notes, :completed_at])
+      params.require(:task).permit(%i(title notes completed_at))
     end
 
     def load_task
