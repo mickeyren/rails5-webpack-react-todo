@@ -13,10 +13,14 @@ gem 'rails', '~> 5.1.3'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-
-gem 'active_model_serializers', '~> 0.10.0' # ActiveModelSerializers brings convention over configuration to your JSON generation.
-
-gem 'webpacker' # Use Webpack to manage app-like JavaScript modules in Rails
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# ActiveModelSerializers brings convention over configuration to your JSON generation.
+gem 'active_model_serializers', '~> 0.10.0'
+ # Use Webpack to manage app-like JavaScript modules in Rails
+gem 'webpacker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
