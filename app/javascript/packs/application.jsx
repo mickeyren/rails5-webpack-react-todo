@@ -9,10 +9,9 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 import App from './components/app'
+import RootReducer from './reducers'
 
- import RootReducer from './reducers'
 var store = createStore(RootReducer, initialState, applyMiddleware(thunk))
-
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <Provider store={store}>

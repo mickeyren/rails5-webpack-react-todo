@@ -3,6 +3,18 @@ import React from 'react'
 class Tasks extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      title: null
+    }
+
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+  }
+
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      console.log('do validate');
+      this.props.onCreateTask(this.state.title)
+    }
   }
 
   render() {
@@ -26,7 +38,7 @@ class Tasks extends React.Component {
               <label>{ task.title }</label>
               <button className="destroy"></button>
             </div>
-            <input className="edit" value="Rule the web" />
+            <input className="edit" />
           </li>
         )
       }
@@ -37,7 +49,7 @@ class Tasks extends React.Component {
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
-            <input className="new-todo" placeholder="What needs to be done?" autoFocus />
+            <input className="new-todo" placeholder="What needs to be done?" onKeyPress={this.handleKeyPress} />
           </header>
           {/* This section should be hidden by default and shown when there are todos */}
           <section className="main">
