@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :tasks
   end
+
+  root 'tasks#index'
 end
