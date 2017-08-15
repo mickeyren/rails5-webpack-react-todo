@@ -13,7 +13,10 @@ module Api
       task = Task.create(task_params)
 
       if task.persisted?
-        head :created
+        render json: task,
+          root: false,
+          serializer: TaskSerializer,
+          status: :created
       else
         head :unprocessable_entity
       end
