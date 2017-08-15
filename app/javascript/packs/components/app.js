@@ -1,11 +1,15 @@
 import React from 'react'
-import Tasks from './tasks'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import TasksContainer from '../containers/tasks'
 
 class App extends React.Component {
   render() {
     return (
-      <Tasks>
-      </Tasks>
+      <Router>
+        <div>
+          <Route path="/" component={TasksContainer} exact />
+        </div>
+      </Router>
     );
   }
 };

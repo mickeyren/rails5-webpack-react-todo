@@ -10,6 +10,12 @@
   <body>
     <%= yield %>
 
+    <script>
+      var initialState = {
+        tasks: <%= ActiveModel::Serializer::ArraySerializer.new(Task.all, each_serializer: TaskSerializer).to_json.html_safe %>
+      }
+    </script>
+
     <%= javascript_pack_tag 'application' %>
   </body>
 </html>

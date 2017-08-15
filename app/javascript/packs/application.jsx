@@ -3,25 +3,21 @@
 // of the page.
 
 import React from 'react'
-import App from './components/app'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import { Provider } from 'react-redux'
+import { createStore, compose, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
+import App from './components/app'
 
-Hello.defaultProps = {
-  name: 'David'
-}
-
-Hello.propTypes = {
-  name: PropTypes.string
-}
+ import RootReducer from './reducers'
+var store = createStore(RootReducer, initialState, applyMiddleware(thunk))
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <App />,
+    <Provider store={store}>
+      <App />
+    </Provider>,
     document.body.appendChild(document.createElement('div')),
   )
 })
