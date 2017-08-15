@@ -4,8 +4,10 @@ import Tasks from '../components/tasks';
 import { createTaskAction } from '../actions'
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps',state)
   return {
-    tasks: state.tasks
+    tasks: state.tasks,
+    isMakingRequest: state.makingRequest
   }
 }
 

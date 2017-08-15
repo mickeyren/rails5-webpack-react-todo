@@ -37,21 +37,27 @@ export function createTaskAction(title) {
       }
     }
     dispatch(makingRequest(true))
-    fetch('/api/tasks', {
-      method: 'POST',
-      body: JSON.stringify(params),
-      credentials: 'same-origin'
-    }).then(parseResponse).then((task) => {
-      dispatch(makingRequest(true))
-      dispatch(createTaskSuccess(task))
-    }).catch((ex) => {
-      console.log('error', ex)
-      // this.addingToCart = false;
-      swal(
-        'Oops...',
-        ex,
-        'error'
-      )
-    })
+    // just for fun, so we can see the loading indicator
+    setTimeout(() => {
+      fetch('/api/tasks', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(params),
+        credentials: 'same-origin'
+      }).then(parseResponse).then((task) => {
+        dispatch(makingRequest(false))
+        dispatch(createTaskSuccess(task))
+      }).catch((ex) => {
+        console.log('error', ex)
+        dispatch(makingRequest(false))
+        swal(
+          'Oops...',
+          ex,
+          'error'
+        )
+      })
+    }, 1000)
   }
+
+
 }

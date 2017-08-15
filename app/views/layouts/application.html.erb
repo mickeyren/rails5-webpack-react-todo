@@ -4,14 +4,21 @@
     <title>Todo</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= stylesheet_pack_tag 'application' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
   <body>
     <%= yield %>
 
     <script>
+      // set common headers for fetch
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+      }
       var initialState = {
         tasks: <%= ActiveModel::Serializer::ArraySerializer.new(Task.all, each_serializer: TaskSerializer).to_json.html_safe %>
       }

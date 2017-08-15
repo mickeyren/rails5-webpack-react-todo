@@ -1,0 +1,16 @@
+.view.loader {
+  margin-left: -45px;
+}
+
+.sk-spinner {
+  margin: 0 auto;
+}
+
+
+.sk-fade-in {
+  -webkit-animation: sk-fade-in 0s;
+  -moz-animation: sk-fade-in 0s;
+  -o-animation: sk-fade-in 0s;
+  -ms-animation: sk-fade-in 0s;
+  animation: sk-fade-in 0s;
+}

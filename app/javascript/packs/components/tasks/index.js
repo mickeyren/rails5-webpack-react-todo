@@ -1,4 +1,7 @@
 import React from 'react'
+import Binder from 'react-binding'
+import Spinner from 'react-spinkit'
+import '!style-loader!css-loader!react-spinkit/css/wave.css'
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -12,8 +15,7 @@ class Tasks extends React.Component {
 
   handleKeyPress(e) {
     if (e.key === 'Enter') {
-      console.log('do validate');
-      this.props.onCreateTask(this.state.title)
+      this.props.onCreateTask(e.target.value)
     }
   }
 
@@ -58,6 +60,15 @@ class Tasks extends React.Component {
             <ul className="todo-list">
               {/* These are here just to show the structure of the list items */}
               {/* List items should get the class `editing` when editing and `completed` when marked as completed */}
+              {this.props.isMakingRequest &&
+              <li>
+                <div className="view loader">
+                <label>
+                  <Spinner name="wave" color="#adadad" />
+                </label>
+                </div>
+              </li>
+              }
               { list }
             </ul>
           </section>
