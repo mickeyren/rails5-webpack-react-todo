@@ -18,7 +18,8 @@ RSpec.describe "Tasks Controller", type: :request do
             id: task.id,
             title: task.title,
             notes: task.notes,
-            completed_at: nil
+            completed_at: nil,
+            created: task.created_at.to_i
           )
       }
     end

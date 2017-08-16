@@ -27,7 +27,7 @@ module Api
         render json: @task,
           root: false,
           serializer: TaskSerializer,
-          status: :created
+          status: :ok
       else
         head :unprocessable_entity
       end
