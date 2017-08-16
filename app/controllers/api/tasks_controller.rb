@@ -1,6 +1,6 @@
 module Api
   class TasksController < ApplicationController
-    before_action :load_task, only: :update
+    before_action :load_task, only: [:update, :destroy]
 
     def index
       collection = Task.all
@@ -28,6 +28,17 @@ module Api
           root: false,
           serializer: TaskSerializer,
           status: :created
+      else
+        head :unprocessable_entity
+      end
+    end
+
+    def destroy
+      if @task.destroy
+        render json: @task,
+          root: false,
+          serializer: TaskSerializer,
+          status: :ok
       else
         head :unprocessable_entity
       end

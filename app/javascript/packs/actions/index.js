@@ -1,4 +1,3 @@
-//var swal = require('sweetalert2')
 import swal from 'sweetalert/dist/sweetalert.min'
 import 'sweetalert/dist/sweetalert'
 
@@ -25,6 +24,13 @@ export function createTaskSuccess(task) {
 export function markCompleteSuccess(task) {
     return {
         type: 'COMPLETE_TASK',
+        task
+    };
+}
+
+export function deleteTaskSuccess(task) {
+    return {
+        type: 'DELETE_TASK',
         task
     };
 }
@@ -75,7 +81,6 @@ export function markCompleteAction(id) {
       }
     }
     dispatch(makingRequest(true))
-    // just for fun, so we can see the loading indicator
     setTimeout(() => {
       fetch(`/api/tasks/${id}`, {
         method: 'PUT',
@@ -95,5 +100,25 @@ export function markCompleteAction(id) {
         )
       })
     }, 1000)
+  }
+}
+
+
+export function deleteTaskAction(id) {
+  return (dispatch) => {
+    fetch(`/api/tasks/${id}`, {
+      method: 'DELETE',
+      headers: headers,
+      credentials: 'same-origin'
+    }).then(parseResponse).then((task) => {
+      dispatch(deleteTaskSuccess(task))
+    }).catch((ex) => {
+      console.log('error', ex)
+      swal(
+        'Oops...',
+        ex,
+        'error'
+      )
+    })
   }
 }

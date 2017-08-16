@@ -8,6 +8,7 @@ class Tasks extends React.Component {
 
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleMarkComplete = this.handleMarkComplete.bind(this)
+    this.handleDeleteTask = this.handleDeleteTask.bind(this)
   }
 
   handleKeyPress(e) {
@@ -21,6 +22,10 @@ class Tasks extends React.Component {
     this.props.onMarkComplete(e.target.dataset.id)
   }
 
+  handleDeleteTask(e) {
+    this.props.onDeleteTask(e.target.dataset.id)
+  }
+
   render() {
     const tasks = this.props.tasks.sort((a, b) => b.created - a.created)
     const list = tasks.map((task) => {
@@ -30,7 +35,7 @@ class Tasks extends React.Component {
             <div className="view">
               <input className="toggle" type="checkbox" defaultChecked />
               <label>{ task.title }</label>
-              <button className="destroy" />
+              <button className="destroy" onClick={this.handleDeleteTask} data-id={task.id} />
             </div>
             <input className="edit" defaultValue="Create a TodoMVC template" />
           </li>
@@ -41,7 +46,7 @@ class Tasks extends React.Component {
             <div className="view">
               <input className="toggle" type="checkbox" data-id={task.id} />
               <label>{ task.title }</label>
-              <button className="destroy"></button>
+              <button className="destroy" onClick={this.handleDeleteTask} data-id={task.id}></button>
             </div>
             <input className="edit" />
           </li>

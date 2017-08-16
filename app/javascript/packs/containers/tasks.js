@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Tasks from '../components/tasks';
-import { createTaskAction, markCompleteAction } from '../actions'
+import { createTaskAction, markCompleteAction, deleteTaskAction } from '../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onMarkComplete: (id) => {
       dispatch(markCompleteAction(id))
+    },
+    onDeleteTask: (id) => {
+      dispatch(deleteTaskAction(id))
     }
   }
 }
