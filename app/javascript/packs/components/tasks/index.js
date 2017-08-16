@@ -5,9 +5,6 @@ import '!style-loader!css-loader!react-spinkit/css/wave.css'
 class Tasks extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      title: null
-    }
 
     this.handleKeyPress = this.handleKeyPress.bind(this)
   }
@@ -15,6 +12,7 @@ class Tasks extends React.Component {
   handleKeyPress(e) {
     if (e.key === 'Enter') {
       this.props.onCreateTask(e.target.value)
+      this.refs.input.value = ''
     }
   }
 
@@ -51,7 +49,7 @@ class Tasks extends React.Component {
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
-            <input className="new-todo" placeholder="What needs to be done?" onKeyPress={this.handleKeyPress} />
+            <input className="new-todo" placeholder="What needs to be done?" ref="input" onKeyPress={this.handleKeyPress} />
           </header>
           {/* This section should be hidden by default and shown when there are todos */}
           <section className="main">
