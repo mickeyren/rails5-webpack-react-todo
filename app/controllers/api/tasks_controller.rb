@@ -24,7 +24,10 @@ module Api
 
     def update
       if @task.update_attributes(task_params)
-        head :ok
+        render json: @task,
+          root: false,
+          serializer: TaskSerializer,
+          status: :created
       else
         head :unprocessable_entity
       end

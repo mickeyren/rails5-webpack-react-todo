@@ -7,6 +7,7 @@ class Tasks extends React.Component {
     super(props)
 
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleMarkComplete = this.handleMarkComplete.bind(this)
   }
 
   handleKeyPress(e) {
@@ -14,6 +15,10 @@ class Tasks extends React.Component {
       this.props.onCreateTask(e.target.value)
       this.refs.input.value = ''
     }
+  }
+
+  handleMarkComplete(e) {
+    this.props.onMarkComplete(e.target.dataset.id)
   }
 
   render() {
@@ -34,7 +39,7 @@ class Tasks extends React.Component {
         return (
           <li key={ task.id }>
             <div className="view">
-              <input className="toggle" type="checkbox" />
+              <input className="toggle" type="checkbox" data-id={task.id} />
               <label>{ task.title }</label>
               <button className="destroy"></button>
             </div>

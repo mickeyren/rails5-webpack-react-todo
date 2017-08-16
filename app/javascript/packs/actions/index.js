@@ -22,6 +22,13 @@ export function createTaskSuccess(task) {
     };
 }
 
+export function markCompleteSuccess(task) {
+    return {
+        type: 'COMPLETE_TASK',
+        task
+    };
+}
+
 export function makingRequest(bool) {
     return {
         type: 'MAKING_REQUEST',
@@ -58,6 +65,35 @@ export function createTaskAction(title) {
       })
     }, 1000)
   }
+}
 
-
+export function markCompleteAction(id) {
+  return (dispatch) => {
+    let params = {
+      task: {
+        completed_at: new Date()
+      }
+    }
+    dispatch(makingRequest(true))
+    // just for fun, so we can see the loading indicator
+    setTimeout(() => {
+      fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(params),
+        credentials: 'same-origin'
+      }).then(parseResponse).then((task) => {
+        dispatch(makingRequest(false))
+        dispatch(markCompleteSuccess(task))
+      }).catch((ex) => {
+        console.log('error', ex)
+        dispatch(makingRequest(false))
+        swal(
+          'Oops...',
+          ex,
+          'error'
+        )
+      })
+    }, 1000)
+  }
 }

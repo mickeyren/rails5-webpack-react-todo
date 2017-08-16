@@ -5,6 +5,8 @@ const TasksReducer = (state, action) => {
   switch(action.type) {
     case 'CREATE_TASK':
       return [...state, action.task]
+    case 'COMPLETE_TASK':
+
     default:
       return state
   }
