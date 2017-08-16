@@ -27,7 +27,7 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const tasks = this.props.tasks.sort((a, b) => b.created - a.created)
+    const tasks = this.props.tasks.sort((a, b) => b.created - a.created && b.completed_at)
     const list = tasks.map((task) => {
       if(task.completed_at) {
         return (
