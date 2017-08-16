@@ -2,7 +2,12 @@ const TasksReducer = (state, action) => {
   if (typeof state === 'undefined') {
     return initialState
   }
-  return state;
+  switch(action.type) {
+    case 'CREATE_TASK':
+      return [...state, action.task]
+    default:
+      return state
+  }
 }
 
 export default TasksReducer
