@@ -1,5 +1,4 @@
 import React from 'react'
-import Binder from 'react-binding'
 import Spinner from 'react-spinkit'
 import '!style-loader!css-loader!react-spinkit/css/wave.css'
 
@@ -20,7 +19,8 @@ class Tasks extends React.Component {
   }
 
   render() {
-    var list = this.props.tasks.map((task) => {
+    const tasks = this.props.tasks.sort((a, b) => b.created - a.created)
+    const list = tasks.map((task) => {
       if(task.completed_at) {
         return (
           <li className="completed" key={ task.id }>
