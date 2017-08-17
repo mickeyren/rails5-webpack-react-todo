@@ -20,7 +20,7 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
       }
       var initialState = {
-        tasks: <%= ActiveModel::Serializer::ArraySerializer.new(Task.all, each_serializer: TaskSerializer).to_json.html_safe %>
+        tasks: <%= ActiveModel::Serializer::ArraySerializer.new(Task.order(completed_at: :desc, created_at: :desc), each_serializer: TaskSerializer).to_json.html_safe %>
       }
     </script>
 
