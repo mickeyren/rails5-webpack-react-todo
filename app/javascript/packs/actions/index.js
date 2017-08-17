@@ -80,26 +80,21 @@ export function markCompleteAction(id) {
         completed_at: new Date()
       }
     }
-    dispatch(makingRequest(true))
-    setTimeout(() => {
-      fetch(`/api/tasks/${id}`, {
-        method: 'PUT',
-        headers: headers,
-        body: JSON.stringify(params),
-        credentials: 'same-origin'
-      }).then(parseResponse).then((task) => {
-        dispatch(makingRequest(false))
-        dispatch(markCompleteSuccess(task))
-      }).catch((ex) => {
-        console.log('error', ex)
-        dispatch(makingRequest(false))
-        swal(
-          'Oops...',
-          ex,
-          'error'
-        )
-      })
-    }, 1000)
+    fetch(`/api/tasks/${id}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify(params),
+      credentials: 'same-origin'
+    }).then(parseResponse).then((task) => {
+      dispatch(markCompleteSuccess(task))
+    }).catch((ex) => {
+      console.log('error', ex)
+      swal(
+        'Oops...',
+        ex,
+        'error'
+      )
+    })
   }
 }
 
