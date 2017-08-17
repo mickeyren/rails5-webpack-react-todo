@@ -6,9 +6,17 @@ class Tasks extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      filter: 'all'
+    }
+
+    this.filteredTasks = props.tasks
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleMarkComplete = this.handleMarkComplete.bind(this)
     this.handleDeleteTask = this.handleDeleteTask.bind(this)
+    this.handleFilterAll = this.handleFilterAll.bind(this)
+    this.handleFilterCompleted = this.handleFilterCompleted.bind(this)
+    this.handleFilterActive = this.handleFilterActive.bind(this)
   }
 
   handleKeyPress(e) {
@@ -19,6 +27,9 @@ class Tasks extends React.Component {
   }
 
   handleMarkComplete(e) {
+    if(!e.target.checked) {
+      return e.preventDefault()
+    }
     this.props.onMarkComplete(e.target.dataset.id)
   }
 
@@ -26,14 +37,53 @@ class Tasks extends React.Component {
     this.props.onDeleteTask(e.target.dataset.id)
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.filter(nextProps)
+  }
+
+  filter(props) {
+    switch(this.state.filter) {
+      case 'all':
+        return this.filteredTasks = props.tasks
+      case 'active':
+        return this.filteredTasks = props.tasks.filter((task) => {
+          return task.completed_at == null
+        })
+      case 'completed':
+        return this.filteredTasks = props.tasks.filter((task) => {
+          return task.completed_at != null
+        })
+      default:
+        return this.filteredTasks
+    }
+  }
+
+  handleFilterAll(e) {
+    this.filteredTasks = this.props.tasks
+    this.setState({filter: 'all'})
+  }
+
+  handleFilterCompleted(e) {
+    this.filter(this.props)
+    this.setState({filter: 'completed'})
+  }
+
+  handleFilterActive(e) {
+    this.filter(this.props)
+    this.setState({filter: 'active'})
+  }
+
+  filteredList() {
+    return this.filteredTasks
+  }
+
   render() {
-    const tasks = this.props.tasks.sort((a, b) => b.created - a.created && b.completed_at)
-    const list = tasks.map((task) => {
+    let list = this.filteredList().map((task) => {
       if(task.completed_at) {
         return (
           <li className="completed" key={ task.id }>
             <div className="view">
-              <input className="toggle" type="checkbox" defaultChecked />
+              <input className="toggle" type="checkbox" onClick={this.handleMarkComplete} defaultChecked />
               <label>{ task.title }</label>
               <button className="destroy" onClick={this.handleDeleteTask} data-id={task.id} />
             </div>
@@ -42,9 +92,9 @@ class Tasks extends React.Component {
         )
       } else {
         return (
-          <li key={ task.id }>
+          <li className={this.completed_at != null ? 'completed' : ''} key={ task.id }>
             <div className="view">
-              <input className="toggle" type="checkbox" data-id={task.id} />
+              <input className="toggle" type="checkbox" data-id={task.id} onClick={this.handleMarkComplete} />
               <label>{ task.title }</label>
               <button className="destroy" onClick={this.handleDeleteTask} data-id={task.id}></button>
             </div>
@@ -83,17 +133,17 @@ class Tasks extends React.Component {
           {/* This footer should hidden by default and shown when there are todos */}
           <footer className="footer">
             {/* This should be `0 items left` by default */}
-            <span className="todo-count"><strong>{ this.props.tasks.length }</strong> tasks</span>
+            <span className="todo-count"><strong>{ this.filteredList().length }</strong> tasks</span>
             {/* Remove this if you don't implement routing */}
             <ul className="filters">
               <li>
-                <a className="selected" href="#/">All</a>
+                <a className={this.state.filter == 'all' ? 'selected' : ''} href="#/" onClick={this.handleFilterAll}>All</a>
               </li>
               <li>
-                <a href="#/active">Active</a>
+                <a className={this.state.filter == 'active' ? 'selected' : ''} href="#/active" onClick={this.handleFilterActive}>Active</a>
               </li>
               <li>
-                <a href="#/completed">Completed</a>
+                <a className={this.state.filter == 'completed' ? 'selected' : ''} href="#/completed" onClick={this.handleFilterCompleted}>Completed</a>
               </li>
             </ul>
             {/* Hidden if no completed items are left ↓ */}
