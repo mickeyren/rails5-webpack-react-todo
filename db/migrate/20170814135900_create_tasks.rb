@@ -3,7 +3,7 @@ class CreateTasks < ActiveRecord::Migration[5.1]
     create_table :tasks do |t|
       t.string :title
       t.text :notes
-      t.date :completed_at
+      t.datetime :completed_at
 
       t.timestamps
     end
