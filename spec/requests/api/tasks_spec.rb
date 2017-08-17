@@ -19,7 +19,7 @@ RSpec.describe "Tasks Controller", type: :request do
             title: task.title,
             notes: task.notes,
             completed_at: nil,
-            created: task.created_at.to_i
+            created_ts: task.created_at.to_i
           )
       }
     end
@@ -39,6 +39,15 @@ RSpec.describe "Tasks Controller", type: :request do
 
       it { expect(response.code).to eq '200' }
       it { expect(task.reload.completed_at).to_not be_nil }
+    end
+
+    context 'deleting tasks' do
+      before do
+        delete "/api/tasks/#{task.id}"
+      end
+      
+      it { expect(response.code).to eq '200' }
+      it { expect(Task.count).to be 0 }
     end
 
     def response_body
