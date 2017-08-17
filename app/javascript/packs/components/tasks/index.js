@@ -44,15 +44,19 @@ class Tasks extends React.Component {
   filter(props) {
     switch(this.state.filter) {
       case 'all':
-        return this.filteredTasks = props.tasks
+        return this.filteredTasks = props.tasks.sort((a, b) => {
+          if(a.completed_at && b.completed_at) return b.created_ts - a.created_ts
+          else if(a.completed_at) return 1
+          else return -1
+        })
       case 'active':
-        return this.filteredTasks = props.tasks.filter((task) => {
-          return task.completed_at == null
-        })
+        return this.filteredTasks = props.tasks.filter((task) =>
+          task.completed_at == null
+        ).sort((a, b) => b.created_ts - a.created_ts)
       case 'completed':
-        return this.filteredTasks = props.tasks.filter((task) => {
-          return task.completed_at != null
-        })
+        return this.filteredTasks = props.tasks.filter((task) =>
+          task.completed_at != null
+        ).sort((a, b) => b.created_ts - a.created_ts)
       default:
         return this.filteredTasks
     }
